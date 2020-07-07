@@ -16,6 +16,8 @@ block_to_led = 5;
 part_spacing = 0.2;
 wall_thickness = 1.5;
 
+m3_hole_size = 3.3;
+
 $fa=0.5;
 $fs=0.5;
 
@@ -56,7 +58,9 @@ module mockup(explode=0, half=0) {
 }
 
 module strip_base(count) {
-  registration_block_cutout = [registration_block_size.y + part_spacing, registration_block_size.x + part_spacing, registration_block_size.z + part_spacing];
+  registration_block_cutout = [registration_block_size.y + part_spacing,
+                               registration_block_size.x + part_spacing,
+                               registration_block_size.z + part_spacing];
   side_inset = 10;
   led_strip_cutout = led_strip_width + 1;
 
@@ -69,6 +73,7 @@ module strip_base(count) {
   difference() {
     translate([-registration_block_cutout.x/2 - wall_thickness, 0, -wall_thickness - block_to_led])
       cube(housing_size);
+
     for (i = [0 : count - 1])
       translate([i * led_stride, 0, 0]) {
         registration_block_base(registration_block_cutout);
@@ -77,29 +82,39 @@ module strip_base(count) {
         translate([-led_cutout/2,-led_cutout/2, registration_block_cutout.z - smidge])
           cube([led_cutout, led_cutout, wall_thickness + smidge * 2]);
       }
-    translate([-registration_block_cutout.x/2 - wall_thickness - smidge, -led_strip_cutout/2,  - block_to_led -0])
+
+    translate([-registration_block_cutout.x/2 - wall_thickness - smidge,
+               -led_strip_cutout/2,
+               -block_to_led -0])
       cube([housing_size.x + smidge * 2, led_strip_cutout, led_strip_thickness]);
+
+    for (i = [0 : count - 2])
+      translate([i * led_stride + led_stride/2, -smidge, registration_block_cutout.z/2]) {
+        rotate([-90, 0, 0])
+        cylinder(d=m3_hole_size, h=housing_size.y + smidge * 2);
+      }
+
   }
 }
 
 
 // max 3 1mm fibers
-module registration_block_awg_18(block_size) {
+module registration_block_awg_18(block_size=registration_block_size) {
   registration_block(block_size, 2.2, 12);
 }
 
 // max 3 1mm fibers
-module registration_block_awg_14(block_size) {
+module registration_block_awg_14(block_size=registration_block_size) {
   registration_block(block_size, 2.2, 12);
 }
 
 // max 5 1mm fibers
-module registration_block_awg_12(block_size) {
+module registration_block_awg_12(block_size=registration_block_size) {
   registration_block(block_size, 2.8, 12);
 }
 
 // max 7 1mm fibers
-module registration_block_awg_10(block_size) {
+module registration_block_awg_10(block_size=registration_block_size) {
   registration_block(block_size, 4.7, 12);
 }
 
