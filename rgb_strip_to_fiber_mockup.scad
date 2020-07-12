@@ -1,3 +1,3 @@
 use <rgb_strip_to_fiber.scad>
 
-mockup(half=1);
+mockup(6, half=1);

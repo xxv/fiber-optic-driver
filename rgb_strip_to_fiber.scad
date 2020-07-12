@@ -29,16 +29,16 @@ led_stride = 1000/leds_per_meter;
 
 smidge = 0.01;
 
-module mockup(explode=0, half=0) {
+module mockup(count, explode=0, half=0) {
   translate([0, explode * 10, 0])
-    strip_base(3);
+    strip_base(count);
   if (!half)
     translate([0, explode * -10, 0])
       mirror([0, 1, 0])
-        strip_base(3);
+        strip_base(count);
 
   translate([0, 0, -block_to_led])
-    led_strip(3);
+    led_strip(count);
       translate([0 * led_stride, 0, 0])
         for (x = [0, half ? 0 : 1])
           rotate([0, 0, 90 + 180 * x])
