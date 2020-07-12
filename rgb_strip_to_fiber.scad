@@ -11,6 +11,7 @@ ferrule_lip = [0.5, 1]; // ferrule wall thickness is 0.2
 
 registration_block_size = [10, 10, 14];
 registration_block_lip = 2;
+led_register_lip = 4;
 block_to_led = 5;
 
 part_spacing = 0.2;
@@ -68,7 +69,8 @@ module strip_base(count) {
                   registration_block_cutout.y/2 + wall_thickness,
                   registration_block_cutout.z + wall_thickness * 2 + block_to_led];
 
-  led_cutout = registration_block_size.x - registration_block_lip;
+  led_cutout = 5.5;
+  fiber_cutout = registration_block_size.x - registration_block_lip;
 
   difference() {
     translate([-registration_block_cutout.x/2 - wall_thickness, 0, -wall_thickness - block_to_led])
@@ -79,8 +81,8 @@ module strip_base(count) {
         registration_block_base(registration_block_cutout);
         translate([-led_cutout/2,-led_cutout/2, -block_to_led + smidge])
           cube([led_cutout, led_cutout, block_to_led]);
-        translate([-led_cutout/2,-led_cutout/2, registration_block_cutout.z - smidge])
-          cube([led_cutout, led_cutout, wall_thickness + smidge * 2]);
+        translate([-fiber_cutout/2,-fiber_cutout/2, registration_block_cutout.z - smidge])
+          cube([fiber_cutout, fiber_cutout, wall_thickness + smidge * 2]);
       }
 
     translate([-registration_block_cutout.x/2 - wall_thickness - smidge,
