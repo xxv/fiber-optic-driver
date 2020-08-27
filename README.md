@@ -2,10 +2,12 @@
 
 An easy-to-use system to illuminate plastic fiber optic bundles with individually-addressible RGB LEDs.
 
-This project addresses a weird need that I've had for a few projects: needing to light up plastic fibers with programmable LEDs.
-This 3D printable housing registers crimped bundles of plastic fibers with standard LED strips. 
+![Exploded mockup](mockup.png)
 
-To use it, first crimp small bundles of 1mm plastic fibers with unshrouded wire ferrules and a hex crimper. 
+This project addresses a weird need that I've had for a few projects: needing to light up plastic fibers with programmable LEDs.
+This 3D printable housing registers crimped bundles of plastic fibers with standard LED strips.
+
+To use it, first crimp small bundles of 1mm plastic fibers with unshrouded wire ferrules and a hex crimper.
 I've found that with 1mm fibers, I was able to get the following bundle sizes:
 
 * 10AWG — 6-7 fibers
