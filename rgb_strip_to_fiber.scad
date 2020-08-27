@@ -100,19 +100,19 @@ module strip_base(count) {
 }
 
 
-// max 3 1mm fibers
+// max 1 1mm fibers
 module registration_block_awg_18(block_size=registration_block_size) {
-  registration_block(block_size, 2.2, 12);
+  registration_block(block_size, 2.5, 8);
 }
 
 // max 3 1mm fibers
 module registration_block_awg_14(block_size=registration_block_size) {
-  registration_block(block_size, 2.2, 12);
+  registration_block(block_size, 3.4, 12);
 }
 
 // max 5 1mm fibers
 module registration_block_awg_12(block_size=registration_block_size) {
-  registration_block(block_size, 2.8, 12);
+  registration_block(block_size, 4, 12);
 }
 
 // max 7 1mm fibers
