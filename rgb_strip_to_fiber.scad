@@ -102,25 +102,27 @@ module strip_base(count) {
 
 // max 1 1mm fibers
 module registration_block_awg_18(block_size=registration_block_size) {
-  registration_block(block_size, 2.5, 8);
+  registration_block(block_size, 2.5, 8, "1");
 }
 
 // max 3 1mm fibers
 module registration_block_awg_14(block_size=registration_block_size) {
-  registration_block(block_size, 3.4, 12);
+  registration_block(block_size, 3.4, 12, "2-3");
 }
 
 // max 5 1mm fibers
 module registration_block_awg_12(block_size=registration_block_size) {
-  registration_block(block_size, 4, 12);
+  registration_block(block_size, 4, 12, "4-5");
 }
 
 // max 7 1mm fibers
 module registration_block_awg_10(block_size=registration_block_size) {
-  registration_block(block_size, 4.7, 12);
+  registration_block(block_size, 4.7, 12, "6-7");
 }
 
-module registration_block(block_size, ferrule_dia, ferrule_length) {
+module registration_block(block_size, ferrule_dia, ferrule_length, label) {
+  label_depth = 0.30;
+
   difference() {
     intersection() {
       registration_block_base(block_size);
@@ -133,6 +135,10 @@ module registration_block(block_size, ferrule_dia, ferrule_length) {
       translate([0, 0, ferrule_lip.y])
         cylinder(d=ferrule_dia, h=ferrule_length + smidge);
     }
+    translate([0, block_size.y/2 - label_depth + smidge, block_size.z/2])
+      rotate([-90, 90, 0])
+        linear_extrude(height=label_depth)
+          text(text=label, size=5, valign="center", halign="center");
   }
 }
 
