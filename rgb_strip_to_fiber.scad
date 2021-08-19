@@ -17,6 +17,9 @@ part_spacing = 0.2;
 wall_thickness = 1.5;
 
 m2_hole_size = 2.2;
+m2_nut_dia = 4.8;
+m2_nut_depth = 1.5;
+
 m3_hole_size = 3.3;
 
 
@@ -67,18 +70,18 @@ module mockup(count, leds_per_meter=60, holes="inner", explode=0, half=false, bl
   }
 }
 
-module strip_base_with_fiber_cutouts(count, leds_per_meter=60, ferrule=0) {
+module strip_base_with_fiber_cutouts(count, leds_per_meter=60, ferrule=0, nut_holes=false) {
   led_stride = 1000/leds_per_meter;
 
   difference() {
-    strip_base(count, leds_per_meter=leds_per_meter, holes="outer", blocks=false);
+    strip_base(count, leds_per_meter=leds_per_meter, holes="outer", blocks=false, nut_holes=nut_holes);
     for (i = [0 : count - 1])
       translate([i * led_stride, 0, 0])
         ferrule_cutout(20, ferrule[0], ferrule[1]);
   }
 }
 
-module strip_base(count, leds_per_meter=60, holes="inner", blocks=true) {
+module strip_base(count, leds_per_meter=60, holes="inner", blocks=true, nut_holes=false) {
   led_stride = 1000/leds_per_meter;
   registration_block_cutout = [registration_block_size.y + part_spacing,
                                registration_block_size.x + part_spacing,
@@ -125,15 +128,21 @@ module strip_base(count, leds_per_meter=60, holes="inner", blocks=true) {
           rotate([-90, 0, 0])
             cylinder(d=m3_hole_size, h=housing_size.y + smidge * 2);
         }
-    if (holes == "outer")
+    if (holes == "outer") {
       translate([-registration_block_cutout.x/2 - wall_thickness,
                  0,
                  -wall_thickness - block_to_led + housing_size.z/2])
-      for (x = [2, housing_size.x - 2])
-        translate([x, -smidge, 0])
+        for (x = [2, housing_size.x - 2])
+          translate([x, -smidge, 0]) {
             rotate([-90, 0, 0])
               cylinder(d=m2_hole_size, h=housing_size.y + smidge * 2);
+            if (nut_holes)
+              translate([0, housing_size.y - m2_nut_depth, 0])
+              rotate([-90, 30, 0])
+                cylinder(d=m2_nut_dia, $fn=6, h=m2_nut_depth + smidge * 2);
 
+          }
+    }
   }
 }
 
